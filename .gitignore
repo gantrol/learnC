@@ -1,1 +1,8 @@
 .vscode
+*.a
+*.db
+*.log
+*.o
+*.so
+
+bin/
