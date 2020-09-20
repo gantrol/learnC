@@ -31,9 +31,7 @@ build:
 
 # The Unit Tests
 .PHONY: tests
-# tests: CFLAGS += $(TARGET)
-$(TESTS):
-	$(CC) $(CFLAGS)  -o $(TESTS) $(TEST_SRC) $(TARGET)
+tests: LDLIBS += $(TARGET)
 tests: $(TESTS)
 	sh ./tests/runtests.sh
 
@@ -52,6 +50,6 @@ install: all
 # The Checker
 check:
 	@echo Files with potentially dangerous functions.
-	@egrep '[^_.>a-zA-Z0-9](str(n?cpy|n?cat|xfrm|n?dup|str|pbrk|tok|_)\
+	@egrep -n '[^_.>a-zA-Z0-9](str(n?cpy|n?cat|xfrm|n?dup|str|pbrk|tok|_)\
 		|stpn?cpy|a?sn?printf|byte_)' $(SOURCES) || true
 
