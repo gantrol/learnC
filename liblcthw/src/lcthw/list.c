@@ -6,7 +6,7 @@ List *List_create()
     return calloc(1, sizeof(List));
 }
 
-void List_destroy(List * list)
+void List_destroy(List *list)
 {
     LIST_FOREACH(list, first, next, cur) {
         if (cur->prev) {
@@ -18,48 +18,65 @@ void List_destroy(List * list)
     free(list);
 }
 
-void List_clear(List * list)
+void List_clear(List *list)
 {
     LIST_FOREACH(list, first, next, cur) {
         free(cur->value);
     }
 }
 
-void List_clear_destroy(List * list)
+void List_clear_destroy(List *list)
 {
     List_clear(list);
     List_destroy(list);
 }
 
-void List_push(List * list, void *value)
+void List_push(List *list, void *value)
 {
     ListNode *node = calloc(1, sizeof(ListNode));
     check_mem(node);
 
     node->value = value;
-
-    if (list->last == NULL) {
+    if (list->first == NULL) {
         list->first = node;
         list->last = node;
     } else {
         list->last->next = node;
         node->prev = list->last;
+        // list->last = list->last->next;
         list->last = node;
     }
 
     list->count++;
-
 error:
     return;
 }
 
-void *List_pop(List * list)
+void *List_pop(List *list)
 {
-    ListNode *node = list->last;
-    return node != NULL ? List_remove(list, node) : NULL;
+    void *result = NULL;
+    ListNode *last = list->last;
+    check(last, "last can't be NULL");
+
+    if (list->count == 1) {
+        check(list->first == list->last, "length of list == 1, but list->first != list->last")
+        list->first = NULL;
+        list->last = NULL;
+    } else {
+        list->last = last->prev;
+        check(list->last != NULL, "Invalid list whose last is NULL.");
+        list->last->next = NULL;
+        last->prev = NULL;
+    }
+    list->count--;
+    result = last->value;
+    free(last);
+    return result;
+error:
+    return NULL;
 }
 
-void List_unshift(List * list, void *value)
+void List_unshift(List *list, void *value)
 {
     ListNode *node = calloc(1, sizeof(ListNode));
     check_mem(node);
@@ -81,13 +98,30 @@ error:
     return;
 }
 
-void *List_shift(List * list)
+void *List_shift(List *list)
 {
-    ListNode *node = list->first;
-    return node != NULL ? List_remove(list, node) : NULL;
+    void *result = NULL;
+    ListNode *first = list->first;
+    check(first, "first can't be NULL");
+    if (list->count == 1) {
+        check(list->first == list->last, "length of list == 1, but list->first != list->last")
+        list->first = NULL;
+        list->last = NULL;
+    } else {
+        list->first = first->next;
+        check(list->first != NULL, "Invalid list whose first is NULL.");
+        list->first->prev = NULL;
+    }
+    list->count--;
+    result = first->value;
+    free(first);
+    return result;
+
+error:
+    return NULL;  //  ???
 }
 
-void *List_remove(List * list, ListNode * node)
+void *List_remove(List *list, ListNode *node)
 {
     void *result = NULL;
 
@@ -98,26 +132,18 @@ void *List_remove(List * list, ListNode * node)
         list->first = NULL;
         list->last = NULL;
     } else if (node == list->first) {
-        list->first = node->next;
-        check(list->first != NULL,
-                "Invalid list, somehow got a first that is NULL.");
-        list->first->prev = NULL;
+        List_shift(list);
     } else if (node == list->last) {
-        list->last = node->prev;
-        check(list->last != NULL,
-                "Invalid list, somehow got a next that is NULL.");
-        list->last->next = NULL;
+        List_pop(list);
     } else {
-        ListNode *after = node->next;
         ListNode *before = node->prev;
-        after->prev = before;
+        ListNode *after = node->next;
         before->next = after;
+        after->prev = before;
     }
-
     list->count--;
-    result = node->value;
+    result = node->value;  //???
     free(node);
-
 error:
     return result;
 }
