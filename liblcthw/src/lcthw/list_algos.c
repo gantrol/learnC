@@ -1,3 +1,4 @@
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 #include "dbg.h"
 #include "list_algos.h"
 
