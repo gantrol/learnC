@@ -1,10 +1,39 @@
 #include <lcthw/darray_algos.h>
 #include <math.h>
 
+void array_swap(DArray * array, int a, int b);
+// int qsort_helper(DArray * array, int lo, int hi, DArray_compare cmp);
+
+int partition(DArray * array, int lo, int hi, DArray_compare cmp)
+{
+    char *pivot = DArray_get(array, hi);
+    int i = lo;
+    for (int j = lo; j < hi; j++) {
+        if (cmp(DArray_get(array, j), pivot) < 0) {
+            array_swap(array, i, j);
+            i++;
+        }
+    }
+    array_swap(array, i, hi);
+    return i;
+
+}
+
+void qsort_helper(DArray * array, int lo, int hi, DArray_compare cmp)
+{
+    debug("lo: %d; hi: %d", lo, hi);
+    if (lo < hi) {
+        int p = partition(array, lo, hi, cmp);
+        qsort_helper(array, lo, p - 1, cmp);
+        qsort_helper(array, p + 1, hi, cmp);
+    }
+}
+
 int DArray_qsort(DArray * array, DArray_compare cmp)
 {
     // qsort(array->contents, DArray_count(array), sizeof(void *), cmp);
-    DArray_mergesort(array, cmp);
+
+    qsort_helper(array, 0, DArray_count(array) - 1, cmp);
     return 0;
 }
 
