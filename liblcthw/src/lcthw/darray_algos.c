@@ -1,4 +1,5 @@
 #include <lcthw/darray_algos.h>
+#include <math.h>
 
 int DArray_qsort(DArray * array, DArray_compare cmp)
 {
@@ -7,12 +8,73 @@ int DArray_qsort(DArray * array, DArray_compare cmp)
     return 0;
 }
 
+int heap_parent(int i) {
+    return floor((i - 1) / 2);
+}
+
+int heap_left_child(int i) {
+    return 2 * i + 1;
+}
+
+int heap_right_child(int i) {
+    return 2 * i + 2;
+}
+
+void array_swap(DArray * array, int a, int b)
+{
+    void *tmp = DArray_get(array, a);
+    DArray_set(array, a, DArray_get(array, b));
+    DArray_set(array, b, tmp);
+    // clear tmp?
+    // free(tmp);
+}
+
+void sink(DArray * array, int start, int end, DArray_compare cmp)
+{
+    int root = start;
+    while (heap_left_child(root) <= end) {
+        int child = heap_left_child(root);
+        int probe = root;
+
+        if (cmp(DArray_get(array, probe), DArray_get(array, child)) < 0) {
+            probe = child;
+        }
+        if (child + 1 <= end && cmp(DArray_get(array, probe),DArray_get(array, child + 1)) < 0) {
+            probe = child + 1;
+        }
+        if (probe == root) return;
+        else {
+            array_swap(array, root, probe);
+            root = probe;
+        }
+    }
+
+}
+
+void heapify(DArray * array, DArray_compare cmp)
+{
+    int start = heap_parent(DArray_count(array) - 1);
+    while (start >= 0) {
+        sink(array, start, DArray_count(array) - 1, cmp);
+        start -= 1;
+    }
+}
+
+
 int DArray_heapsort(DArray * array, DArray_compare cmp)
 {
     // return heapsort(array->contents, DArray_count(array),
             // sizeof(void *), cmp);
     // qsort(array->contents, DArray_count(array), sizeof(void *), cmp);
-    DArray_mergesort(array, cmp);
+    heapify(array, cmp);
+    int end = DArray_count(array) - 1;
+    while (end > 0) {
+        array_swap(array, end, 0);
+        end -= 1;
+        sink(array, 0, end, cmp);
+    }
+
+
     return 0;
 }
 
