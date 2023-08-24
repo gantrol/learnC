@@ -1,0 +1,17 @@
+---
+Language:        Cpp
+BasedOnStyle: LLVM
+IndentWidth:     4
+TabWidth:        4
+UseTab:          Never
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterClass:      true
+  AfterFunction:   true
+  AfterNamespace:  true
+  SplitEmptyFunction: true
+  SplitEmptyRecord: true
+  SplitEmptyNamespace: true
+IndentCaseLabels: false
+ColumnLimit:     0
+AllowShortBlocksOnASingleLine: false

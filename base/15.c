@@ -6,8 +6,7 @@ int main(int argc, char *argv[])
     int ages[] = {31, 29, 25, 28, 28};
     char *names[] = {
         "蠢狗君", "大明",
-        "小黄", "小明", "小红"
-     };
+        "小黄", "小明", "小红"};
 
     // safely get the size of ages
     int count = sizeof(ages) / sizeof(int); // TODO: why?
@@ -40,8 +39,8 @@ int main(int argc, char *argv[])
     printf("---\n");
 
     // fourth way with pointers in a stupid complex way
-    for (cur_name = names, cur_age = ages; 
-            (cur_age - ages) < count; cur_name++, cur_age++) {
+    for (cur_name = names, cur_age = ages;
+         (cur_age - ages) < count; cur_name++, cur_age++) {
         printf("%s lived %d years so far.\n", *cur_name, *cur_age);
     }
 
