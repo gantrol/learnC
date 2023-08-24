@@ -40,8 +40,9 @@ int main(int argc, char *argv[])
     printf("---\n");
 
     // fourth way with pointers in a stupid complex way
-    for (cur_name = names, cur_age = ages;
-         (cur_age - ages) < count; cur_name++, cur_age++) {
+    // ry rewriting the loops so that they start at the end of the arrays and go to the beginning.
+    for (cur_name = (names + count - 1), cur_age = (ages + count - 1);
+         (cur_age - ages) >= 0; cur_name--, cur_age--) {
         printf("%s lived %d years so far.\n", *cur_name, *cur_age);
     }
 
