@@ -5,8 +5,9 @@ int main(int argc, char *argv[])
     // create two arrays we care about
     int ages[] = {31, 29, 25, 28, 28};
     char *names[] = {
-        "蠢狗君", "大明",
-        "小黄", "小明", "小红"};
+            "蠢狗君", "大明",
+            "小黄", "小明", "小红"
+    };
 
     // safely get the size of ages
     int count = sizeof(ages) / sizeof(int); // TODO: why?
