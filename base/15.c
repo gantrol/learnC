@@ -45,5 +45,8 @@ int main(int argc, char *argv[])
         printf("%s lived %d years so far.\n", *cur_name, *cur_age);
     }
 
+    for (cur_name = names, cur_age = ages, i = 0; i < count; i++) {
+        printf("地址 %p 活了 %d 年\n", *(cur_name + i), *(cur_age + i));
+    }
     return 0;
 }
