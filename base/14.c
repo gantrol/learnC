@@ -6,7 +6,7 @@
 // forward declarations
 void print_letters(char arg[], int length);
 
-void print_arguments(int argc, char *argv[])
+void print_arguments(int argc, char **argv)
 {
     int i = 0;
 
