@@ -1,16 +1,24 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 int main(int argc, char *argv[])
 {
     // create two arrays we care about
-    int ages[] = {31, 29, 25, 28, 28};
-    char *names[] = {
-            "蠢狗君", "大明",
-            "小黄", "小明", "小红"
-    };
+    int count = 5;
+    int *ages = malloc(count * sizeof(int));
+    ages[0] = 31;
+    ages[1] = 29;
+    ages[2] = 25;
+    ages[3] = 28;
+    ages[4] = 28;
 
+    char **names = malloc(count * sizeof(char *));
+    names[0] = "蠢狗君";
+    names[1] = "大明";
+    names[2] = "小黄";
+    names[3] = "小明";
+    names[4] = "小红";
     // safely get the size of ages
-    int count = sizeof(ages) / sizeof(int); // TODO: why?
     int i;
 
     // first way using indexing
