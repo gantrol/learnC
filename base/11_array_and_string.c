@@ -2,13 +2,17 @@
  * String in C was stored as a char array, terminated with a null char('\0').
  */
 #include <stdio.h>
+#include <stdlib.h>
 #include <assert.h>
 
 int main() {
     // request 4 numbers space
-    int numbers[4] = {1};
+    int count = 4;
+    int *numbers = malloc(count * sizeof(int));
+    numbers[0] = 1;
     // request 4 chars space
-    char name[4] = {'a'};
+    char *name = malloc(count * sizeof(char));
+    name[0] = 'a';
 
     assert(numbers[0] == 1);
     assert(numbers[1] == 0);
