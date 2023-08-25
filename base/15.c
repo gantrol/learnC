@@ -23,18 +23,19 @@ void print_array_pointer_3(int count, int * cur_age, char **cur_name)
 {
     int i;
     for (i = 0; i < count; i++) {
-        printf("%s活了 %d 年。\n", cur_name[i], cur_age[i]);
+        printf("%s is %d years old again.\n", cur_name[i], cur_age[i]);
     }
     printf("---\n");
 }
 
 void print_array_pointer_4(int count, int ages[], char * names[])
 {
-    int *cur_age;
-    char **cur_name;
-    for (cur_name = names, cur_age = ages;
-         (cur_age - ages) < count; cur_name++, cur_age++) {
+    int *cur_age = ages;
+    char **cur_name = names;
+    while ((cur_age - ages) < count) {
         printf("%s lived %d years so far.\n", *cur_name, *cur_age);
+        cur_age++;
+        cur_name++;
     }
     printf("---\n");
 }
