@@ -8,3 +8,7 @@
 bin/
 
 bstrlib/
+main
+coreutils-5.0/
+.DS_Store
+.idea/

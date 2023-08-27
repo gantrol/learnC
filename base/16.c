@@ -61,8 +61,8 @@ int main(int argc, char** argv)
     ming->weight += 20;
     Person_print(ming);
 
-    Person_destroy(dog);
-    Person_destroy(ming);
+//    Person_destroy(dog);
+//    Person_destroy(ming);
 
     return 0;
 
